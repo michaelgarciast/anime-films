@@ -1,0 +1,79 @@
+<section class="movie-list">
+  <div class="movie-list-header">
+    <div class="search-bar">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Busca tu película favorita..."
+        [(ngModel)]="searchTerm"
+        (keyup)="onSearchKeyUp()"
+      />
+      <button class="search-button">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+    <div class="filters">
+      <div ngbDropdown>
+        <button
+          type="button"
+          class="filter-button"
+          id="genreFilter"
+          ngbDropdownToggle
+        >
+          <i class="fas fa-filter"></i>
+          {{ currentGenre === "all" ? "Todos" : (currentGenre | titlecase) }}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="genreFilter">
+          <a
+            *ngFor="let genre of genres"
+            ngbDropdownItem
+            (click)="onGenreSelect(genre)"
+          >
+            {{ genre === "all" ? "Todos" : (genre | titlecase) }}
+          </a>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="filter-button"
+        id="sortByDate"
+        (click)="toggleSort()"
+      >
+        <i class="fas {{ sortDescending ? 'fa-sort-down' : 'fa-sort-up' }}"></i>
+        Por fecha
+      </button>
+    </div>
+  </div>
+
+  <div class="movie-grid">
+    <div class="movie-card" *ngFor="let movie of movies">
+      <div class="movie-card-image" (click)="showMovieDetails(movie)">
+        <img [src]="movie.poster" [alt]="movie.title" />
+        <span class="movie-year">{{ movie.year }}</span>
+      </div>
+      <div class="movie-card-body">
+        <h5 class="movie-title" (click)="showMovieDetails(movie)">
+          {{ movie.title }}
+        </h5>
+        <p class="movie-original-title">{{ movie.originalTitle }}</p>
+        <div class="movie-meta">
+          <div
+            class="rating"
+            [innerHTML]="generateStarRating(movie.rating)"
+          ></div>
+          <span class="movie-duration">{{ movie.duration }}</span>
+        </div>
+        <div class="movie-genres">
+          <span *ngFor="let genre of movie.genres" class="genre-badge">
+            {{ genre }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="no-movies" *ngIf="movies.length === 0">
+      <i class="fas fa-film"></i>
+      <h4>No se encontraron películas</h4>
+      <p>Intenta con otra búsqueda o filtro</p>
+    </div>
+  </div>
+</section>
