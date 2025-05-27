@@ -1,0 +1,72 @@
+<div class="movie-detail">
+  <div class="movie-header">
+    <h4 class="movie-title">{{ movie.title }}</h4>
+    <button
+      type="button"
+      class="close-button"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    >
+      ✕
+    </button>
+  </div>
+  <div class="movie-body">
+    <div class="movie-info">
+      <img [src]="movie.poster" class="movie-poster" [alt]="movie.title" />
+      <div class="movie-meta">
+        <h5>Información</h5>
+        <ul>
+          <li><strong>Título original:</strong> {{ movie.originalTitle }}</li>
+          <li><strong>Director:</strong> {{ movie.director }}</li>
+          <li><strong>Estudio:</strong> {{ movie.studio }}</li>
+          <li><strong>Año:</strong> {{ movie.year }}</li>
+          <li><strong>Duración:</strong> {{ movie.duration }}</li>
+          <li>
+            <strong>Géneros:</strong>
+            <span *ngFor="let genre of movie.genres" class="genre-badge">
+              {{ genre }}
+            </span>
+          </li>
+          <li>
+            <strong>Calificación:</strong>
+            <span
+              class="rating"
+              [innerHTML]="generateStarRating(movie.rating)"
+            ></span>
+            <span>({{ movie.rating }}/5)</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="movie-details">
+      <h4>Sinopsis</h4>
+      <p>{{ movie.synopsis }}</p>
+      <h4>Reparto de voces</h4>
+      <ul>
+        <li *ngFor="let actor of movie.voiceActors">{{ actor }}</li>
+      </ul>
+      <h4>Premios y reconocimientos</h4>
+      <ul>
+        <li *ngFor="let award of movie.awards">{{ award }}</li>
+      </ul>
+      <h4>Galería</h4>
+      <div class="gallery">
+        <img
+          *ngFor="let img of movie.gallery"
+          [src]="img"
+          class="gallery-image"
+          [alt]="'Escena de ' + movie.title"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="movie-footer">
+    <button
+      type="button"
+      class="close-modal-button"
+      (click)="activeModal.close('Close click')"
+    >
+      Cerrar
+    </button>
+  </div>
+</div>
